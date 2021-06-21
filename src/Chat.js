@@ -9,6 +9,7 @@ import db from "./firebase";
 import firebase from "firebase";
 import { useStateValue } from "./StateProvider";
 
+
 function Chat() {
   const [input, setInput] = useState("");
   const [seed, setSeed] = useState("");
