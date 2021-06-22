@@ -24,11 +24,17 @@ function App() {
     });
     
     var channel = pusher.subscribe('messages');
-    channel.bind('inserted', function(data) {
-      alert(JSON.stringify(data));
+    channel.bind('inserted', function(newMessage) {
+      // alert(JSON.stringify(newMessage));
+      setMessages([...messages,newMessage ]);
     });
 
-  }, [])
+    return () =>{
+      channel.unbind_all();
+      channel.unsubscribe();
+    }
+
+  }, [messages])
 
   console.log(messages);
 
@@ -45,10 +51,10 @@ function App() {
             <Sidebar />
             <Switch>
               <Route path="/rooms/:roomId">
-                <Chat />
+                <Chat  messages = {messages}/>
               </Route>
               <Route path="/">
-                <Chat />
+                <Chat messages = {messages}/>
               </Route>
             </Switch>
           </Router>
